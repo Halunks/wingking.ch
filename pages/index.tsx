@@ -1,26 +1,23 @@
 import React from "react"
 import { GetStaticProps } from "next"
 import Layout from "../components/Layout"
-import Post, { PostProps } from "../components/Post"
+import Recipe, { RecipeProps } from "../components/Recipe"
+import prisma from '../lib/prisma';
 
 export const getStaticProps: GetStaticProps = async () => {
-  const feed = [
-    {
-      id: 1,
-      title: "Prisma is the perfect ORM for Next.js",
-      content: "[Prisma](https://github.com/prisma/prisma) and Next.js go _great_ together!",
-      published: false,
+  const feed = await prisma.recipe.findMany({
+    where: { published: true },
+    include: {
       author: {
-        name: "Nikolas Burk",
-        email: "burk@prisma.io",
+        select: { name: true },
       },
     },
-  ]
-  return { props: { feed } }
-}
+  });
+  return { props: { feed } };
+};
 
 type Props = {
-  feed: PostProps[]
+  feed: RecipeProps[]
 }
 
 const Blog: React.FC<Props> = (props) => {
@@ -29,24 +26,24 @@ const Blog: React.FC<Props> = (props) => {
       <div className="page">
         <h1>Public Feed</h1>
         <main>
-          {props.feed.map((post) => (
-            <div key={post.id} className="post">
-              <Post post={post} />
+          {props.feed.map((recipe) => (
+            <div key={recipe.id} className="recipe">
+              <Recipe recipe={recipe} />
             </div>
           ))}
         </main>
       </div>
       <style jsx>{`
-        .post {
+        .recipe {
           background: white;
           transition: box-shadow 0.1s ease-in;
         }
 
-        .post:hover {
+        .recipe:hover {
           box-shadow: 1px 1px 3px #aaa;
         }
 
-        .post + .post {
+        .recipe + .recipe {
           margin-top: 2rem;
         }
       `}</style>
