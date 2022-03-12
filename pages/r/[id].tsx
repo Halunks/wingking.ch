@@ -54,6 +54,7 @@ const Recipe: React.FC<RecipeProps> = (props) => {
             <div>
                 <h2>{title}</h2>
                 <p>By {props?.author?.name || "Unknown author"}</p>
+                {/* eslint-disable-next-line react/no-children-prop */}
                 <ReactMarkdown children={props.content}/>
                 {
                     !props.published && userHasValidSession && postBelongsToUser && (
