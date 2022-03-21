@@ -20,6 +20,7 @@ model Recipe {
 //  updatedAt     DateTime @updatedAt
   author        User?   @relation(fields: [authorId], references: [id])
   authorId      Int?
+  image         String
   comments      Comment[]
   keywords      String[]
   categories    Category[] @relation(references: [id])
