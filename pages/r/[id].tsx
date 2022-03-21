@@ -6,6 +6,8 @@ import Layout from "../../components/Layout"
 import {RecipeProps} from "../../components/Recipe"
 import {useSession} from "next-auth/react";
 import prisma from '../../lib/prisma';
+import defaultImage from "../../public/images/wings-default.jpg";
+import Image from "next/image";
 
 export const getServerSideProps: GetServerSideProps = async ({params}) => {
     const recipe = await prisma.recipe.findUnique({
@@ -53,7 +55,12 @@ const Recipe: React.FC<RecipeProps> = (props) => {
         <Layout>
             <div>
                 <h2>{title}</h2>
+                <Image
+                    src={defaultImage}
+                    layout="responsive"
+                />
                 <p>By {props?.author?.name || "Unknown author"}</p>
+                {/* eslint-disable-next-line react/no-children-prop */}
                 <ReactMarkdown children={props.content}/>
                 {
                     !props.published && userHasValidSession && postBelongsToUser && (
@@ -77,7 +84,7 @@ const Recipe: React.FC<RecipeProps> = (props) => {
               }
 
               button {
-                background: #ececec;
+                background: rgb(219 219 219);
                 border: 0;
                 border-radius: 0.125rem;
                 padding: 1rem 2rem;
