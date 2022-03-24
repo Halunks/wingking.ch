@@ -33,12 +33,12 @@ const Draft: React.FC = () => {
         e.preventDefault();
         try {
             const body = {title, content};
-            await fetch('/api/recipe', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
+            await fetch("/api/recipe", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
                 body: JSON.stringify(body),
             });
-            await Router.push('/drafts');
+            await Router.push("/drafts");
         } catch (error) {
             console.error(error);
         }

@@ -31,6 +31,7 @@ const Recipe: React.FC<{ recipe: RecipeProps }> = ({recipe}) => {
                 src={defaultPicture}
                 key={recipe.id}
                 layout="responsive"
+                alt="Cooked chicken wings"
             />
             <div className="imageWrapper">
                 <Image
