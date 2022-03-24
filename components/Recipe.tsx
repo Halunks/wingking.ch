@@ -2,8 +2,8 @@ import React from "react";
 import Router from "next/router";
 import ReactMarkdown from "react-markdown";
 import Image from "next/image";
-import defaultImage from '../public/images/wings-default.jpg'
 import defaultAuthor from '../public/images/alex-maeder.jpg'
+import defaultPicture from '../public/images/wings-default.jpg'
 
 export type RecipeProps = {
     id: number;
@@ -13,10 +13,14 @@ export type RecipeProps = {
         lastName: string;
         email: string;
     } | null;
-    createdAt: string;
+    image: string;
+    // TODO implement when db model valid
+    // createdAt: string;
+    // updatedAt: string;
     content: string;
     published: boolean;
 };
+
 
 const Recipe: React.FC<{ recipe: RecipeProps }> = ({recipe}) => {
     const authorName = recipe.author ? recipe.author.name : "Unknown author";
@@ -24,7 +28,8 @@ const Recipe: React.FC<{ recipe: RecipeProps }> = ({recipe}) => {
         <div onClick={() => Router.push("/r/[id]", `/r/${recipe.id}`)}>
             <h2>{recipe.title}</h2>
             <Image
-                src={defaultImage}
+                src={defaultPicture}
+                key={recipe.id}
                 layout="responsive"
             />
             <div className="imageWrapper">
@@ -43,12 +48,6 @@ const Recipe: React.FC<{ recipe: RecipeProps }> = ({recipe}) => {
                 padding: 2rem;
               }
 
-              @media only screen and (max-width: 800px) {
-                div {
-                  padding: 1rem;
-                }
-              }
-
               .author {
                 display: flex;
                 flex-direction: column;
@@ -59,6 +58,12 @@ const Recipe: React.FC<{ recipe: RecipeProps }> = ({recipe}) => {
                 border-radius: 50%;
                 padding-left: 0;
                 padding-bottom: 0;
+              }
+
+              @media only screen and (max-width: 800px) {
+                div {
+                  padding: 1rem;
+                }
               }
             `}</style>
         </div>
